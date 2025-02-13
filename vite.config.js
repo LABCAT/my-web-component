@@ -1,17 +1,19 @@
 import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
+  plugins: [vue()], // <-- Add this
   build: {
     lib: {
-      entry: './src/main.js', // Your Web Component entry
+      entry: './src/main.js',
       name: 'MyWebComponent',
       fileName: (format) => `my-web-component.${format}.js`,
     },
     rollupOptions: {
-      external: ['vue'], // Exclude Vue from the bundle
+      external: ['vue'],
       output: {
         globals: {
-          vue: 'Vue', // Vue is expected to be available globally
+          vue: 'Vue',
         },
       },
     },
