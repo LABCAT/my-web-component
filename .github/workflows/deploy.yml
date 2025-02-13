@@ -26,3 +26,11 @@ jobs:
 
       - name: Build component
         run: pnpm run build
+
+      - name: Upload artifact to GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/my-web-component.umd.js
+          tag_name: ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
