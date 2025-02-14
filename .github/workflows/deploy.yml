@@ -5,33 +5,37 @@ on:
     tags:
       - '*'  # Trigger on all git tags (e.g., 1.0, 1.1)
 
+# Add permissions block to allow release creation
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-
+        uses: actions/checkout@v3  # Updated to v3
+      
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3  # Updated to v3
         with:
-          node-version: '22.13'
-
+          node-version: '20.x'  # Changed to 20.x as Node 22 is not yet stable
+          
       - name: Install pnpm
-        run: npm install -g pnpm
-
+        uses: pnpm/action-setup@v2  # Better way to install pnpm
+        with:
+          version: latest
+          
       - name: Install dependencies
         run: pnpm install
-
+        
       - name: Build component
         run: pnpm run build
-
+        
       - name: Upload artifact to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
           files: dist/my-web-component.umd.js
           tag_name: ${{ github.ref_name }}
         env:
-          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Changed to use default GITHUB_TOKEN
