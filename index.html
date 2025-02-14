@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,14 +14,15 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Web Component Demo</h1>
     <p>Framework-independent demo:</p>
-    
-    <my-component message="Hello from Web Component!"></my-component>
 
+    <my-component message="Hello from Web Component!"></my-component>
     <!-- Load the web component -->
-    <script src="https://github.com/LABCAT/my-web-component/releases/latest/download/my-web-component.umd.js"></script>
+    <script type="module"
+        src="https://github.com/LABCAT/my-web-component/releases/latest/download/my-web-component.js"></script>
 
     <!-- Environment check -->
     <div id="vue-check"></div>
@@ -32,4 +34,5 @@
         });
     </script>
 </body>
+
 </html>
