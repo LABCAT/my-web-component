@@ -2,7 +2,7 @@ name: Build and Deploy Web Component
 on:
   push:
     tags:
-      - 'v*'
+      - '*'
 permissions:
   contents: read
   pages: write
@@ -45,7 +45,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'dist'
-
   deploy-pages:
     needs: build
     runs-on: ubuntu-latest
