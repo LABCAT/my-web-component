@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Component Demo</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Web Component Demo</h1>
+    <p>Framework-independent demo:</p>
+    
+    <my-component message="Hello from Web Component!"></my-component>
+
+    <!-- Load the web component -->
+    <script src="https://github.com/LABCAT/my-web-component/releases/latest/download/my-web-component.umd.js"></script>
+
+    <!-- Environment check -->
+    <div id="vue-check"></div>
+    <script>
+        window.addEventListener('load', () => {
+            document.getElementById('vue-check').innerHTML = `
+                <p>Vue.js present: <strong>${typeof Vue !== 'undefined' ? '❌ Yes' : '✅ No'}</strong></p>
+            `;
+        });
+    </script>
+</body>
+</html>
