@@ -30,7 +30,7 @@ jobs:
      
       - name: Build component
         run: pnpm run build
-      
+     
       - name: Prepare GitHub Pages
         run: cp demo.html dist/index.html
      
