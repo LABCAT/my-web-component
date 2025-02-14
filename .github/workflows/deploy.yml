@@ -1,57 +1,63 @@
 name: Build and Deploy Web Component
 on:
-  push:
-    tags:
-      - '*'
+ push:
+   tags:
+     - '*'
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+ contents: write
+ pages: write      
+ id-token: write  
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-     
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'pnpm'
-     
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: latest
-     
-      - name: Install dependencies
-        run: pnpm install
-     
-      - name: Build component
-        run: pnpm run build
-     
-      - name: Prepare GitHub Pages
-        run: cp demo.html dist/index.html
-     
-      - name: Upload artifact to GitHub Releases
-        uses: softprops/action-gh-release@v2
-        with:
-          files: dist/my-web-component.umd.js
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-     
-      - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: 'dist'
-  deploy-pages:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+ build:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v3
+    
+     - name: Set up Node.js
+       uses: actions/setup-node@v3
+       with:
+         node-version: '22.13'
+        
+     - name: Install pnpm
+       uses: pnpm/action-setup@v2
+       with:
+         version: latest
+        
+     - name: Install dependencies
+       run: pnpm install
+      
+     - name: Build component
+       run: pnpm run build
+      
+     - name: Prepare GitHub Pages
+       run: cp demo.html dist/index.html
+      
+     - name: Upload artifact to GitHub Releases
+       uses: softprops/action-gh-release@v2
+       with:
+         files: dist/my-web-component.umd.js
+         tag_name: ${{ github.ref_name }}
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ deploy-pages:
+   needs: build
+   runs-on: ubuntu-latest
+   environment:
+     name: github-pages
+     url: ${{ steps.deployment.outputs.page_url }}
+   steps:
+     - name: Checkout
+       uses: actions/checkout@v3
+    
+     - name: Setup Pages
+       uses: actions/configure-pages@v3
+      
+     - name: Upload artifact
+       uses: actions/upload-pages-artifact@v3
+       with:
+         path: 'dist'
+        
+     - name: Deploy to GitHub Pages
+       id: deployment
+       uses: actions/deploy-pages@v4
