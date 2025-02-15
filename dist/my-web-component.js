@@ -1,6 +1,6 @@
-class a extends HTMLElement {
+class o extends HTMLElement {
   constructor() {
-    super(), this.attachShadow({ mode: "open" });
+    super();
   }
   static get observedAttributes() {
     return ["message"];
@@ -8,17 +8,17 @@ class a extends HTMLElement {
   connectedCallback() {
     this.render();
   }
-  attributeChangedCallback(e, r, s) {
+  attributeChangedCallback(e, n, s) {
     e === "message" && this.render();
   }
   render() {
     const e = this.getAttribute("message") || "Click to expand";
-    this.shadowRoot.innerHTML = `
+    this.innerHTML = `
       <style>
-        .accordion__item {
-          margin: 10px 0;
+        .my-component {
+          display: block;
         }
-        .accordion__summary {
+        .my-component__summary {
           font-size: 18px;
           cursor: pointer;
           background-color: #f1f1f1;
@@ -27,10 +27,10 @@ class a extends HTMLElement {
           border-radius: 4px;
           transition: background-color 0.3s ease;
         }
-        .accordion__summary:hover {
+        .my-component__summary:hover {
           background-color: #e0e0e0;
         }
-        .accordion__details {
+        .my-component__details {
           padding: 10px;
           background-color: #fafafa;
           border: 1px solid #ccc;
@@ -39,19 +39,19 @@ class a extends HTMLElement {
           opacity: 0;
           transition: transform 0.3s ease, opacity 0.3s ease;
         }
-        details[open] .accordion__details {
+        .my-component[open] .my-component__details {
           transform: translateY(0);
           opacity: 1;
         }
       </style>
 
-      <details class="accordion__item">
-        <summary class="accordion__summary">${e}</summary>
-        <div class="accordion__details">
+      <details class="my-component">
+        <summary class="my-component__summary">${e}</summary>
+        <div class="my-component__details">
           <p>This is the content of the accordion. You can add anything here!</p>
         </div>
       </details>
     `;
   }
 }
-customElements.define("my-accordion", a);
+customElements.define("my-component", o);
