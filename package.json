@@ -7,9 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "commit-dist": "pnpm run build && git add -f dist/ && git diff --cached --quiet || (git commit -m \"Update dist files\" && git push)",
+    "release": "read -p 'Version: ' VERSION && git tag -f $VERSION && git push --tags",
     "copy-demo": "cp demo.html dist/index.html",
-    "deploy": "pnpm run copy-demo && gh-pages -d dist",
-    "release": "read -p 'Version: ' VERSION && pnpm run build && git add -f dist/ && git commit -m \"Release $VERSION\" && git tag $VERSION && git push origin main --tags"
+    "deploy": "pnpm run copy-demo && gh-pages -d dist"
   },
   "dependencies": {
     "vue": "^3.5.13"
